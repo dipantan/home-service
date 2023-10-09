@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import PropTypes from "prop-types";
 import { SafeAreaView } from "react-native-safe-area-context";
 import {
   PermissionsAndroid,
@@ -15,12 +14,14 @@ import { getIsAuthenticated } from "../store/selectors";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "expo-router";
 import { clearError } from "../store/slices/auth";
+import state from "../store";
 
 const Container: JSX.Element = ({ children }) => {
   const isAuthenticated: Boolean = useSelector(getIsAuthenticated);
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const [isDialogOpened, setIsDialogOpened] = useState(false);
+  const { type } = state.getState().auth;
 
   function askPermission() {
     // console.log("askPermission called");
@@ -62,7 +63,7 @@ const Container: JSX.Element = ({ children }) => {
   }
 
   React.useEffect(() => {
-    dispatch(clearError());
+    dispatch(clearError(""));
 
     if (!isDialogOpened) {
       askPermission();
@@ -76,11 +77,18 @@ const Container: JSX.Element = ({ children }) => {
   }, []);
 
   React.useEffect(() => {
-    if (isAuthenticated) {
-      navigation.reset({
-        index: 0,
-        routes: [{ name: "home" }],
-      });
+    if (isAuthenticated && type) {
+      if (type === "user") {
+        navigation.reset({
+          index: 0,
+          routes: [{ name: "user/home" }],
+        });
+      } else if (type === "technician") {
+        navigation.reset({
+          index: 0,
+          routes: [{ name: "technician/home" }],
+        });
+      }
     } else {
       navigation.reset({
         index: 0,
@@ -99,11 +107,6 @@ const Container: JSX.Element = ({ children }) => {
       {children}
     </SafeAreaView>
   );
-};
-
-Container.props = {
-  children: PropTypes.arrayOf(PropTypes.element).isRequired,
-  row: PropTypes.bool,
 };
 
 export default Container;

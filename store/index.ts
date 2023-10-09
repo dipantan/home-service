@@ -38,7 +38,7 @@ const store = configureStore({
 });
 
 store.subscribe(() => {
-  // console.log(JSON.stringify(store.getState().notification, null, 2));
+  // console.log(JSON.stringify(store.getState(), null, 2));
 });
 
 export type RootState = ReturnType<typeof store.getState>;
