@@ -6,7 +6,6 @@ import {
   logout,
   logoutSuccess,
 } from "../auth";
-import { Alert } from "react-native";
 
 const loginLogic = createLogic({
   type: login,
