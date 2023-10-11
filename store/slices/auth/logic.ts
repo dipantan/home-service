@@ -45,7 +45,7 @@ const logoutLogic = createLogic({
   type: logout,
   latest: true,
   async process({ getState, action }, dispatch, done) {
-    dispatch(logoutSuccess());
+    dispatch(logoutSuccess(""));
     done();
   },
 });

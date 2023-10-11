@@ -21,56 +21,54 @@ const Container: JSX.Element = ({ children }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const [isDialogOpened, setIsDialogOpened] = useState(false);
-  const { type } = state.getState().auth;
+  const { type, firstTime } = state.getState().auth;
 
   function askPermission() {
-    // console.log("askPermission called");
-    PermissionsAndroid.request(
-      PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS
-    )
-      .then((permission) => {
-        if (permission === "denied" || permission === "never_ask_again") {
-          const release = Platform.constants["Release"];
-          if (release > 12) {
-            if (!isDialogOpened) {
-              console.log("Dialog opened");
-              Alert.alert("", "You must give notification permission", [
-                {
-                  text: "Exit",
-                  style: "destructive",
-                  // onPress: () => RNExitApp.exitApp(),
-                },
-                {
-                  text: "Open Settings",
-                  style: "default",
-                  onPress: () => {
-                    Linking.openSettings();
-                    ToastAndroid.show(
-                      "Manually give notification permission",
-                      ToastAndroid.LONG
-                    );
+    if (Platform.OS === "android") {
+      PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS
+      )
+        .then((permission) => {
+          if (permission === "denied" || permission === "never_ask_again") {
+            const release = Platform.constants["Release"];
+            if (release > 12) {
+              if (!isDialogOpened) {
+                console.log("Dialog opened");
+                Alert.alert("", "You must give notification permission", [
+                  {
+                    text: "Exit",
+                    style: "destructive",
+                    // onPress: () => RNExitApp.exitApp(),
                   },
-                },
-              ]);
-              setIsDialogOpened(true);
+                  {
+                    text: "Open Settings",
+                    style: "default",
+                    onPress: () => {
+                      Linking.openSettings();
+                      ToastAndroid.show(
+                        "Manually give notification permission",
+                        ToastAndroid.LONG
+                      );
+                    },
+                  },
+                ]);
+                setIsDialogOpened(true);
+              }
             }
           }
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   }
 
   React.useEffect(() => {
     dispatch(clearError(""));
-
     if (!isDialogOpened) {
       askPermission();
     }
-
     const state = AppState.addEventListener("focus", askPermission);
-
     return () => {
       state.remove();
     };
@@ -89,6 +87,11 @@ const Container: JSX.Element = ({ children }) => {
           routes: [{ name: "technician/home" }],
         });
       }
+    } else if (!firstTime) {
+      navigation.reset({
+        index: 0,
+        routes: [{ name: "login" }],
+      });
     } else {
       navigation.reset({
         index: 0,
