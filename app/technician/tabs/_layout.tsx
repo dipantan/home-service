@@ -13,7 +13,7 @@ const home = () => {
       }}
     >
       <Tabs.Screen name="dashboard" />
-      <Tabs.Screen name="orders" />
+      <Tabs.Screen name="messages" />
       <Tabs.Screen name="profile" />
     </Tabs>
   );
