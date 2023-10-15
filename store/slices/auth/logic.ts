@@ -6,36 +6,39 @@ import {
   logout,
   logoutSuccess,
 } from "../auth";
+import { instance } from "../../../helper";
 
 const loginLogic = createLogic({
   type: login,
   latest: true,
   async process({ getState, action }, dispatch, done) {
     try {
-      //   const request = await fetch(baseUrlDev + endpoints.loginWithOTP, {
-      //     method: "POST",
-      //     body: JSON.stringify(action.payload),
-      //     headers: {
-      //       "Content-Type": "application/json",
-      //       Accept: "*/*",
-      //     },
-      //   });
-      //   const response = await request.json();
-      //   if (response.status) {
-      //     const isAllowed = await checkTransporter(response.token);
-      //     if (isAllowed) {
-      dispatch(loginSuccess(action.payload));
-      //     } else {
-      //       Alert.alert(
-      //         "",
-      //         "Currently this app is not enabled for transporters. Please use webApp app.loadbazzar.com "
-      //       );
-      //     }
-      //   } else {
-      //     dispatch(loginFailed(response));
-      //   }
+      if (action.payload.type == "register") {
+        const data = {
+          email: action.payload.email,
+          name: action.payload.name,
+          password: action.payload.password,
+          phone: action.payload.phone,
+        };
+
+        const req = await instance.post("/auth/register/user", data);
+        if (req.data?.error) {
+          dispatch(loginFailed(req.data));
+        } else {
+          const data_ = req.data?.data;
+          dispatch(loginSuccess(data_));
+        }
+      } else {
+        const data = {
+          username: action.payload.username,
+          password: action.payload.password,
+        };
+        const req = await instance.post("/auth/login", data);
+        const data_ = req.data?.data;
+        dispatch(loginSuccess(data_));
+      }
     } catch (error) {
-      //   dispatch(loginFailed(error));
+      dispatch(loginFailed(error?.response?.data));
     }
     done();
   },

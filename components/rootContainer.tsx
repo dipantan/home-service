@@ -17,11 +17,11 @@ import { clearError } from "../store/slices/auth";
 import state from "../store";
 
 const Container: JSX.Element = ({ children }) => {
-  const isAuthenticated: Boolean = useSelector(getIsAuthenticated);
+  const isAuthenticated = useSelector(getIsAuthenticated);
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const [isDialogOpened, setIsDialogOpened] = useState(false);
-  const { type, firstTime } = state.getState().auth;
+  const { user, firstTime } = state.getState().auth;
 
   function askPermission() {
     if (Platform.OS === "android") {
@@ -75,13 +75,13 @@ const Container: JSX.Element = ({ children }) => {
   }, []);
 
   React.useEffect(() => {
-    if (isAuthenticated && type) {
-      if (type === "user") {
+    if (isAuthenticated && user?.type) {
+      if (user?.type === "user") {
         navigation.reset({
           index: 0,
           routes: [{ name: "user/home" }],
         });
-      } else if (type === "technician") {
+      } else if (user?.type === "technician") {
         navigation.reset({
           index: 0,
           routes: [{ name: "technician/home" }],

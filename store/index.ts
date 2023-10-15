@@ -16,12 +16,8 @@ const RootReducer = combineReducers({
 const persistConfig = {
   key: "root", // key is required
   storage: AsyncStorage, // AsyncStorage as storage
-  whitelist: ["auth", "notification"], // which reducer want to persist
+  whitelist: [], // which reducer want to persist
 };
-
-// const logicDependencies = {
-//   baseURLDev: baseUrlDev,
-// }; // optional, for logic only
 
 const logicArray = [loginLogic, logoutLogic]; // optional, for logic only
 

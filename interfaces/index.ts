@@ -13,3 +13,11 @@ export interface User {
   email: string;
   phone: string;
 }
+
+export interface RegisterUser {
+  name: string;
+  email: string;
+  phone: string;
+  password: string;
+  type: string;
+}

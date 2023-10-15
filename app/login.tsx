@@ -4,48 +4,41 @@ import {
   View,
   TextInput,
   TouchableOpacity,
+  ToastAndroid,
+  ActivityIndicator,
 } from "react-native";
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { login } from "../store/slices/auth";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { clearError, login } from "../store/slices/auth";
 import { FontAwesome, Ionicons } from "@expo/vector-icons";
 import Colors from "../constants/Colors";
 import { useNavigation } from "expo-router";
+import { getError, getIsLoading } from "../store/selectors";
 
 const Login = () => {
   const [email, setEmail] = useState(null);
   const [pass, setPass] = useState(null);
-
-  const handleLogin = () => {
-    if (email == "abc" && pass == "1234") {
-      dispatch(
-        login({
-          user: {
-            name: "test technician",
-            email: "testtechnician@email.com",
-            phone: "765776574",
-          },
-          token: "sadasdasdasdasdasdr34r43r3r",
-          type: "technician",
-        })
-      );
-    } else {
-      dispatch(
-        login({
-          user: {
-            name: "test user",
-            email: "testuser@email.com",
-            phone: "765776574",
-          },
-          token: "sadasdasdasdasdasdr34r43r3r",
-          type: "user",
-        })
-      );
-    }
-  };
+  const error = useSelector(getError);
+  const loading = useSelector(getIsLoading);
 
   const navigation = useNavigation();
   const dispatch = useDispatch();
+
+  const handleLogin = () => {
+    dispatch(
+      login({
+        username: email,
+        password: pass,
+      })
+    );
+  };
+
+  useEffect(() => {
+    if (error) {
+      ToastAndroid.show(error?.message, ToastAndroid.SHORT);
+      dispatch(clearError(""));
+    }
+  }, [error]);
 
   return (
     <View
@@ -117,9 +110,13 @@ const Login = () => {
           }}
           onPress={handleLogin}
         >
-          <Text style={{ fontWeight: "normal", fontSize: 20, color: "#fff" }}>
-            Sign In
-          </Text>
+          {loading ? (
+            <ActivityIndicator />
+          ) : (
+            <Text style={{ fontWeight: "normal", fontSize: 20, color: "#fff" }}>
+              Sign In
+            </Text>
+          )}
         </TouchableOpacity>
 
         <Text style={{ color: "#555", marginTop: 20, alignSelf: "center" }}>
