@@ -10,13 +10,13 @@ import {
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { clearError, login } from "../store/slices/auth";
-import { FontAwesome, Ionicons } from "@expo/vector-icons";
-import Colors from "../constants/Colors";
+import { clearError, login } from "../../store/slices/auth";
+import { Entypo, Feather, FontAwesome, Ionicons } from "@expo/vector-icons";
+import Colors from "../../constants/Colors";
 import { useNavigation } from "expo-router";
 import { ScrollView } from "react-native-gesture-handler";
-import { RegisterUser } from "../interfaces";
-import { getError, getIsLoading } from "../store/selectors";
+import { RegisterUser } from "../../interfaces";
+import { getError, getIsLoading } from "../../store/selectors";
 
 const Signup = () => {
   const navigation = useNavigation();
@@ -44,18 +44,18 @@ const Signup = () => {
   }, [error]);
 
   return (
-    <ScrollView
-      showsVerticalScrollIndicator={false}
-      style={{ backgroundColor: "#fff" }}
-      keyboardShouldPersistTaps="handled"
-    >
-      <View
-        style={{
-          flex: 1,
+    <View style={{ flex: 1, backgroundColor: "#fff" }}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="handled"
+        contentContainerStyle={{
           justifyContent: "center",
           alignItems: "center",
+        }}
+        style={{
+          flex: 1,
           backgroundColor: "#fff",
-          marginTop: "20%",
+          marginTop: "4%",
         }}
       >
         <Text style={{ alignSelf: "center", fontWeight: "bold", fontSize: 24 }}>
@@ -110,9 +110,9 @@ const Signup = () => {
                   })
                 }
               />
-              <Ionicons
+              <Entypo
                 style={styles.inputIcon}
-                name="checkmark-circle"
+                name="email"
                 size={17}
                 color="green"
               />
@@ -136,6 +136,12 @@ const Signup = () => {
                     };
                   })
                 }
+              />
+              <Feather
+                style={styles.inputIcon}
+                name="phone"
+                size={17}
+                color="green"
               />
             </View>
           </View>
@@ -177,7 +183,7 @@ const Signup = () => {
               justifyContent: "center",
               alignSelf: "center",
               marginTop: 30,
-              borderRadius: 15,
+              borderRadius: 8,
             }}
             onPress={register}
           >
@@ -207,73 +213,9 @@ const Signup = () => {
               Sign in
             </Text>
           </Text>
-          <TouchableOpacity onPress={() => {}}></TouchableOpacity>
-
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              marginTop: 20,
-            }}
-          >
-            <View style={{ flex: 1, height: 1, backgroundColor: "#ccc" }} />
-            <Text style={{ color: "#CCC", marginHorizontal: 10 }}>Or</Text>
-            <View style={{ flex: 1, height: 1, backgroundColor: "#ccc" }} />
-          </View>
-
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-around",
-              marginTop: 20,
-            }}
-          >
-            <TouchableOpacity>
-              <FontAwesome name="facebook" size={30} color="blue" />
-            </TouchableOpacity>
-            <TouchableOpacity>
-              <FontAwesome name="google" size={30} color="red" />
-            </TouchableOpacity>
-            <TouchableOpacity>
-              <FontAwesome name="apple" size={30} color="black" />
-            </TouchableOpacity>
-          </View>
         </View>
-        {/* <Button
-        title="login user"
-        onPress={() => {
-          dispatch(
-            login({
-              user: {
-                name: "test user",
-                email: "testuser@email.com",
-                phone: "765776574",
-              },
-              token: "sadasdasdasdasdasdr34r43r3r",
-              type: "user",
-            })
-          );
-        }}
-      />
-
-      <Button
-        title="login technician"
-        onPress={() => {
-          dispatch(
-            login({
-              user: {
-                name: "test technician",
-                email: "testtechnician@email.com",
-                phone: "765776574",
-              },
-              token: "sadasdasdasdasdasdr34r43r3r",
-              type: "technician",
-            })
-          );
-        }}
-      /> */}
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </View>
   );
 };
 
@@ -295,7 +237,7 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     backgroundColor: "white",
-    borderRadius: 18,
+    borderRadius: 12,
     borderWidth: 1.5,
     height: 50,
     borderColor: "#ccc",

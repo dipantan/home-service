@@ -8,6 +8,7 @@ import authReducer from "./slices/auth";
 
 // logics
 import { loginLogic, logoutLogic } from "./slices/auth/logic";
+import { instance } from "../helper";
 
 const RootReducer = combineReducers({
   auth: authReducer, // add auth reducer
@@ -16,12 +17,14 @@ const RootReducer = combineReducers({
 const persistConfig = {
   key: "root", // key is required
   storage: AsyncStorage, // AsyncStorage as storage
-  whitelist: [], // which reducer want to persist
+  whitelist: ["auth"], // which reducer want to persist
 };
 
 const logicArray = [loginLogic, logoutLogic]; // optional, for logic only
 
-const logicMiddleware = createLogicMiddleware(logicArray); // optional, for logic only
+const logicDependencies = { instance };
+
+const logicMiddleware = createLogicMiddleware(logicArray, logicDependencies); // optional, for logic only
 
 const persistedReducer = persistReducer(persistConfig, RootReducer); // create a persisted reducer
 

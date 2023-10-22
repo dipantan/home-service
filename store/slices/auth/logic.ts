@@ -6,12 +6,14 @@ import {
   logout,
   logoutSuccess,
 } from "../auth";
-import { instance } from "../../../helper";
+// import { instance } from "../../../helper";
 
 const loginLogic = createLogic({
   type: login,
   latest: true,
-  async process({ getState, action }, dispatch, done) {
+  async process({ getState, action, instance }, dispatch, done) {
+    console.log(instance);
+
     try {
       if (action.payload.type == "register") {
         const data = {
@@ -22,6 +24,27 @@ const loginLogic = createLogic({
         };
 
         const req = await instance.post("/auth/register/user", data);
+        if (req.data?.error) {
+          dispatch(loginFailed(req.data));
+        } else {
+          const data_ = req.data?.data;
+          dispatch(loginSuccess(data_));
+        }
+      } else if (action.payload.type == "tech-register") {
+        const data = {
+          name: action.payload.name,
+          email: action.payload.email,
+          phone: action.payload.phone,
+          password: action.payload.password,
+          category: action.payload.category,
+          experience: action.payload.experience,
+          speciality: action.payload.speciality,
+          location: {
+            lat: action.payload.lat,
+            long: action.payload.long,
+          },
+        };
+        const req = await instance.post("/auth/register/technician", data);
         if (req.data?.error) {
           dispatch(loginFailed(req.data));
         } else {

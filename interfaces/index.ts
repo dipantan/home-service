@@ -21,3 +21,16 @@ export interface RegisterUser {
   password: string;
   type: string;
 }
+
+export interface RegisterTechnician {
+  name: string;
+  email: string;
+  phone: string;
+  password: string;
+  category: string;
+  experience: string;
+  speciality: string;
+  lat: string;
+  long: string;
+  type: string;
+}
