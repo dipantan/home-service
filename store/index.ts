@@ -5,6 +5,7 @@ import { createLogicMiddleware } from "redux-logic";
 
 // slices
 import authReducer from "./slices/auth";
+import netReducer from "./slices/network";
 
 // logics
 import { loginLogic, logoutLogic } from "./slices/auth/logic";
@@ -12,6 +13,7 @@ import { instance } from "../helper";
 
 const RootReducer = combineReducers({
   auth: authReducer, // add auth reducer
+  network: netReducer, // add net reducer
 });
 
 const persistConfig = {

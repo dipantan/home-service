@@ -6,14 +6,11 @@ import {
   logout,
   logoutSuccess,
 } from "../auth";
-// import { instance } from "../../../helper";
 
 const loginLogic = createLogic({
   type: login,
   latest: true,
   async process({ getState, action, instance }, dispatch, done) {
-    console.log(instance);
-
     try {
       if (action.payload.type == "register") {
         const data = {

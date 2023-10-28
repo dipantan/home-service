@@ -2038,6 +2038,16 @@
     prompts "^2.4.0"
     semver "^7.5.2"
 
+"@react-native-community/netinfo@9.3.10":
+  version "9.3.10"
+  resolved "https://registry.yarnpkg.com/@react-native-community/netinfo/-/netinfo-9.3.10.tgz#9b6cc2aec9329b5ccf35e866094c43aa420d927a"
+  integrity sha512-OwnqoJUp/4sa9e3ju+wQavAa8l0fiA3DheeLMKzKxtKeAe0CA7bNxWRM752JvRQ6A/igPnt1V0zSlu5owvQEuA==
+
+"@react-native-picker/picker@2.4.10":
+  version "2.4.10"
+  resolved "https://registry.yarnpkg.com/@react-native-picker/picker/-/picker-2.4.10.tgz#339c7bfc6e1d9a5e934122eaaa7767dc1c5fb725"
+  integrity sha512-EvAlHmPEPOwvbP6Pjg/gtDV3XJzIjIxr10fXFNlX5r9HeHw582G1Zt2o8FLyB718nOttgj8HYUTGxvhu4N65sQ==
+
 "@react-native/assets-registry@^0.72.0":
   version "0.72.0"
   resolved "https://registry.yarnpkg.com/@react-native/assets-registry/-/assets-registry-0.72.0.tgz#c82a76a1d86ec0c3907be76f7faf97a32bbed05d"
@@ -3836,6 +3846,11 @@ expo-linking@~5.0.2:
     invariant "^2.2.4"
     qs "^6.11.0"
     url-parse "^1.5.9"
+
+expo-location@~16.1.0:
+  version "16.1.0"
+  resolved "https://registry.yarnpkg.com/expo-location/-/expo-location-16.1.0.tgz#251a465790d6622f828fd18f0edb2a73b9664b72"
+  integrity sha512-/jfRyYrXb9vjr8HoYmVHnzEqnw+0jaoRbHsxj6ePPAbevXmvXZqYHFRtfZtQ+q32SB4X6kUAXu28eBcLS+tqaA==
 
 expo-modules-autolinking@1.5.1:
   version "1.5.1"
@@ -5998,6 +6013,11 @@ minizlib@^2.1.1:
     minipass "^3.0.0"
     yallist "^4.0.0"
 
+mitt@1.1.3:
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/mitt/-/mitt-1.1.3.tgz#528c506238a05dce11cd914a741ea2cc332da9b8"
+  integrity sha512-mUDCnVNsAi+eD6qA0HkRkwYczbLHJ49z17BGe2PYRhZL4wpZUFZGJHU7/5tmvohoma+Hdn0Vh/oJTiPEmgSruA==
+
 mkdirp@^0.5.1, mkdirp@~0.5.1:
   version "0.5.6"
   resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-0.5.6.tgz#7def03d2432dcae4ba1d611445c48396062255f6"
@@ -6619,6 +6639,15 @@ qs@^6.10.3, qs@^6.11.0, qs@^6.11.2:
   dependencies:
     side-channel "^1.0.4"
 
+query-string@6.10.1:
+  version "6.10.1"
+  resolved "https://registry.yarnpkg.com/query-string/-/query-string-6.10.1.tgz#30b3505f6fca741d5ae541964d1b3ae9dc2a0de8"
+  integrity sha512-SHTUV6gDlgMXg/AQUuLpTiBtW/etZ9JT6k6RCtCyqADquApLX0Aq5oK/s5UeTUAWBG50IExjIr587GqfXRfM4A==
+  dependencies:
+    decode-uri-component "^0.2.0"
+    split-on-first "^1.0.0"
+    strict-uri-encode "^2.0.0"
+
 query-string@7.1.3, query-string@^7.1.3:
   version "7.1.3"
   resolved "https://registry.yarnpkg.com/query-string/-/query-string-7.1.3.tgz#a1cf90e994abb113a325804a972d98276fe02328"
@@ -6737,6 +6766,11 @@ react-native-exit-app@^2.0.0:
   resolved "https://registry.yarnpkg.com/react-native-exit-app/-/react-native-exit-app-2.0.0.tgz#21d523580f0c1bf6793bc4e6d5771ba9347cd8e4"
   integrity sha512-vr9e/8jgPcKCBw6qo0QLxfeMiTwExydghbYDqpLZYAGWR+6cbgnhvOxwdYj/JWR7ZtOALrRA4GMGSvU/ayxM7w==
 
+react-native-flipper@^0.164.0:
+  version "0.164.0"
+  resolved "https://registry.yarnpkg.com/react-native-flipper/-/react-native-flipper-0.164.0.tgz#64f6269a86a13a72e30f53ba9f5281d2073a7697"
+  integrity sha512-iJhIe3rqx6okuzBp4AJsTa2b8VRAOGzoLRFx/4HGbaGvu8AurZjz8TTQkhJsRma8dsHN2b6KKZPvGGW3wdWzvA==
+
 react-native-gesture-handler@~2.12.0:
   version "2.12.1"
   resolved "https://registry.yarnpkg.com/react-native-gesture-handler/-/react-native-gesture-handler-2.12.1.tgz#f11a99fb95169810c6886fad5efa01a17fd81660"
@@ -6747,6 +6781,11 @@ react-native-gesture-handler@~2.12.0:
     invariant "^2.2.4"
     lodash "^4.17.21"
     prop-types "^15.7.2"
+
+react-native-responsive-dimensions@^3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/react-native-responsive-dimensions/-/react-native-responsive-dimensions-3.1.1.tgz#c4daf977b30a909f21164de53a8ba4c9451efefc"
+  integrity sha512-Vo2OhWsphq0HgKsmeZOeyW+c+vsFn1ZaCFkGDgdeCEEiLriT76jGA1JlUjtrj27hvyo/xzeTlBZ+vBso1A84fw==
 
 react-native-safe-area-context@4.6.3:
   version "4.6.3"
@@ -6872,6 +6911,23 @@ react@18.2.0:
   integrity sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==
   dependencies:
     loose-envify "^1.1.0"
+
+reactotron-core-client@2.8.10:
+  version "2.8.10"
+  resolved "https://registry.yarnpkg.com/reactotron-core-client/-/reactotron-core-client-2.8.10.tgz#798f2a7aa9fd7e18e7a510531a613e8ae3008eb0"
+  integrity sha512-SYRO4OCutJzfWMnaULUGVyETZnMDCU5ECNflXyM3Z5Gnfxp/wV6d7jYonhfxHdpU/aGb4Eg15C22myOCXSu6HQ==
+
+reactotron-react-native@^5.0.3:
+  version "5.0.3"
+  resolved "https://registry.yarnpkg.com/reactotron-react-native/-/reactotron-react-native-5.0.3.tgz#5ab884f33e6ffa0437b8b0f4d93cabb5acb7da24"
+  integrity sha512-uUQ074uw3I9X/pc7FBgrrwrFzfwXDKlxzuekNjzspZz9Y0qVLX1cAm9GTC0ZPsZRvY5wDPY/Il7XfV1YeVSDxA==
+  dependencies:
+    mitt "1.1.3"
+    query-string "6.10.1"
+    reactotron-core-client "2.8.10"
+    rn-host-detect "1.2.0"
+  optionalDependencies:
+    react-native-flipper "^0.164.0"
 
 readable-stream@^3.4.0:
   version "3.6.2"
@@ -7110,6 +7166,11 @@ rimraf@~2.6.2:
   integrity sha512-mwqeW5XsA2qAejG46gYdENaxXjx9onRNCfn7L0duuP4hCuTIi/QO7PDK07KJfp1d+izWPrzEJDcSqBa0OZQriA==
   dependencies:
     glob "^7.1.3"
+
+rn-host-detect@1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/rn-host-detect/-/rn-host-detect-1.2.0.tgz#8b0396fc05631ec60c1cb8789e5070cdb04d0da0"
+  integrity sha512-btNg5kzHcjZZ7t7mvvV/4wNJ9e3MPgrWivkRgWURzXL0JJ0pwWlU4zrbmdlz3HHzHOxhBhHB4D+/dbMFfu4/4A==
 
 run-parallel@^1.1.9:
   version "1.2.0"

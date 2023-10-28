@@ -8,6 +8,7 @@ import {
   Platform,
   Linking,
 } from "react-native";
+import NetInfo, { NetInfoState } from "@react-native-community/netinfo";
 // import RNExitApp from "react-native-exit-app";
 
 import { getIsAuthenticated } from "../store/selectors";
@@ -15,6 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "expo-router";
 import { clearError } from "../store/slices/auth";
 import state from "../store";
+import { setStatus } from "../store/slices/network";
 
 const Container: JSX.Element = ({ children }) => {
   const isAuthenticated = useSelector(getIsAuthenticated);
@@ -68,9 +70,22 @@ const Container: JSX.Element = ({ children }) => {
     if (!isDialogOpened) {
       askPermission();
     }
+
     const state = AppState.addEventListener("focus", askPermission);
+
+    const unsubscribe = NetInfo.addEventListener((state: NetInfoState) => {
+      dispatch(
+        setStatus({
+          isConnected: state.isConnected || false,
+          type: state.type,
+          isInternetReachable: state.isInternetReachable || false,
+        })
+      );
+    });
+
     return () => {
       state.remove();
+      unsubscribe();
     };
   }, []);
 

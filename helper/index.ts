@@ -12,3 +12,13 @@ export const instance = axios.create({
     Authorization: `Bearer ${user?.token || undefined}`,
   },
 });
+
+export const getCall = async (endpoint: string) => {
+  const req = await instance.get(endpoint);
+  return req;
+};
+
+export const postCall = async (endpoint: string, data: any) => {
+  const req = await instance.post(endpoint, data);
+  return req.data;
+};

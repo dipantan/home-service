@@ -9,19 +9,36 @@ import {
   ActivityIndicator,
 } from "react-native";
 import React, { useEffect, useState } from "react";
+import * as Location from "expo-location";
 import { useDispatch, useSelector } from "react-redux";
 import { clearError, login } from "../../store/slices/auth";
-import { Entypo, Feather, FontAwesome, Ionicons } from "@expo/vector-icons";
+import {
+  Entypo,
+  Feather,
+  FontAwesome,
+  Ionicons,
+  MaterialCommunityIcons,
+} from "@expo/vector-icons";
+import { Picker } from "@react-native-picker/picker";
+
 import Colors from "../../constants/Colors";
 import { useNavigation } from "expo-router";
 import { ScrollView } from "react-native-gesture-handler";
-import { RegisterTechnician, RegisterUser } from "../../interfaces";
+import { RegisterTechnician } from "../../interfaces";
 import { getError, getIsLoading } from "../../store/selectors";
+import { instance } from "../../helper";
+import {
+  responsiveHeight,
+  responsiveWidth,
+  responsiveFontSize,
+  responsiveScreenHeight,
+} from "react-native-responsive-dimensions";
 
 const Signup = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const [eye, setEye] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState<RegisterTechnician>({
     name: "",
     email: "",
@@ -34,6 +51,8 @@ const Signup = () => {
     long: "",
     type: "tech-register",
   });
+  const [categories, setCategories] = useState<string[]>([]);
+  const [subCategories, setSubCategories] = useState<string[]>([]);
   const error = useSelector(getError);
   const loading = useSelector(getIsLoading);
 
@@ -41,12 +60,77 @@ const Signup = () => {
     dispatch(login(data));
   }
 
+  const getUserLocation = async () => {
+    try {
+      const permission = await Location.getForegroundPermissionsAsync();
+      if (permission.granted) {
+        const location = await Location.getCurrentPositionAsync({
+          accuracy: Location.LocationAccuracy.Highest,
+          mayShowUserSettingsDialog: true,
+        });
+        setData((prev) => {
+          return {
+            ...prev,
+            lat: location.coords.latitude.toString(),
+            long: location.coords.longitude.toString(),
+          };
+        });
+      } else {
+        // ask permission
+        await Location.requestForegroundPermissionsAsync();
+        await getUserLocation();
+      }
+    } catch (err) {
+      ToastAndroid.show("Please give location permission", ToastAndroid.SHORT);
+      navigation.goBack();
+    }
+  };
+
+  const getAllCategory = async () => {
+    setIsLoading(true);
+    try {
+      const req = await instance.get("/services");
+      setCategories(req.data?.data);
+      setIsLoading(false);
+    } catch (err) {
+      setIsLoading(false);
+    }
+  };
+
+  const getSubCategories = async () => {
+    try {
+      setIsLoading(true);
+      const req = await instance.get(`/services?category=${data.category}`);
+      setSubCategories(req.data?.data);
+      setData((prev) => {
+        return {
+          ...prev,
+          speciality: req.data?.data[0],
+        };
+      });
+      setIsLoading(false);
+    } catch (err) {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getUserLocation();
+    getAllCategory();
+  }, []);
+
   useEffect(() => {
     if (error) {
       ToastAndroid.show(error?.message, ToastAndroid.SHORT);
       dispatch(clearError(""));
     }
   }, [error]);
+
+  useEffect(() => {
+    if (data.category) {
+      getSubCategories();
+    }
+  }, [data.category]);
 
   return (
     <View style={{ flex: 1, backgroundColor: "#fff" }}>
@@ -60,9 +144,21 @@ const Signup = () => {
         style={{
           flex: 1,
           backgroundColor: "#fff",
-          marginTop: "4%",
+          marginVertical: responsiveScreenHeight(2),
         }}
       >
+        {isLoading && (
+          <View
+            style={{
+              position: "absolute",
+              zIndex: 1,
+              top: responsiveHeight(50),
+            }}
+          >
+            <ActivityIndicator size={"large"} />
+          </View>
+        )}
+
         <Text style={{ alignSelf: "center", fontWeight: "bold", fontSize: 24 }}>
           Welcome Back!
         </Text>
@@ -130,7 +226,7 @@ const Signup = () => {
               <TextInput
                 placeholder="9800XXXXXX"
                 maxLength={10}
-                keyboardType="phone-pad"
+                keyboardType="number-pad"
                 style={styles.inputfild}
                 value={data.phone}
                 onChangeText={(text) =>
@@ -175,6 +271,112 @@ const Signup = () => {
                 size={17}
                 color="green"
                 onPress={() => setEye((prev) => !prev)}
+              />
+            </View>
+          </View>
+
+          {/* category picker*/}
+          <View style={{ marginTop: 15 }}>
+            <Text style={styles.inputfildLabel}>Category</Text>
+            <Picker
+              selectedValue={data.category}
+              onValueChange={(itemValue, itemIndex) => {
+                setData((prev) => {
+                  return {
+                    ...prev,
+                    category: itemValue,
+                  };
+                });
+              }}
+              style={styles.inputContainer}
+              mode="dropdown"
+            >
+              {categories.map((item) => {
+                return (
+                  <Picker.Item
+                    style={{
+                      textTransform: "capitalize",
+                    }}
+                    key={item}
+                    label={item}
+                    value={item}
+                  />
+                );
+              })}
+            </Picker>
+          </View>
+
+          {/* sub-category picker*/}
+          <View style={{ marginTop: 15 }}>
+            <Text style={styles.inputfildLabel}>Speciality</Text>
+            <Picker
+              selectedValue={data.speciality}
+              onValueChange={(itemValue, itemIndex) => {
+                setData((prev) => {
+                  return {
+                    ...prev,
+                    speciality: itemValue,
+                  };
+                });
+              }}
+              style={styles.inputContainer}
+              mode="dropdown"
+            >
+              {subCategories.length > 0 ? (
+                subCategories.map((item) => {
+                  return (
+                    <Picker.Item
+                      style={{
+                        textTransform: "capitalize",
+                      }}
+                      key={item}
+                      label={item}
+                      value={item}
+                    />
+                  );
+                })
+              ) : (
+                <Picker.Item
+                  style={{
+                    textTransform: "capitalize",
+                  }}
+                  label={"Select a category"}
+                  value={"Select a category"}
+                />
+              )}
+            </Picker>
+          </View>
+
+          {/* experience */}
+          <View style={{ marginTop: 15 }}>
+            <Text style={styles.inputfildLabel}>
+              Experience
+              <Text style={{ fontSize: responsiveFontSize(1.2) }}>
+                {" "}
+                (in years)
+              </Text>
+            </Text>
+            <View style={styles.inputContainer}>
+              <TextInput
+                placeholder="5"
+                secureTextEntry={eye}
+                style={styles.inputfild}
+                value={data.password}
+                keyboardType="number-pad"
+                onChangeText={(text) =>
+                  setData((prev) => {
+                    return {
+                      ...prev,
+                      password: text,
+                    };
+                  })
+                }
+              />
+              <MaterialCommunityIcons
+                name="account-star-outline"
+                style={styles.inputIcon}
+                size={17}
+                color="green"
               />
             </View>
           </View>
@@ -228,8 +430,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
-    rowGap: 16,
-    padding: 16,
+    rowGap: responsiveHeight(4),
+    padding: responsiveWidth(4),
   },
   social: {
     borderRadius: 20,
@@ -240,10 +442,8 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     backgroundColor: "white",
-    borderRadius: 12,
-    borderWidth: 1.5,
-    height: 50,
-    borderColor: "#ccc",
+    elevation: 5,
+    height: responsiveHeight(6),
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
@@ -252,14 +452,13 @@ const styles = StyleSheet.create({
     marginRight: 20,
   },
   inputfild: {
-    paddingLeft: 16,
-    height: 50,
+    paddingLeft: responsiveWidth(3),
     borderColor: "#ccc",
-    width: "80%",
+    width: responsiveWidth(80),
   },
   inputfildLabel: {
-    fontSize: 16,
-    marginBottom: 10,
+    fontSize: responsiveFontSize(1.8),
+    marginBottom: responsiveHeight(1.2),
     fontWeight: "bold",
   },
 });
