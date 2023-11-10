@@ -1,14 +1,24 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import { StyleSheet, View } from "react-native";
+import React, { useEffect, useState } from "react";
+
+import Colors from "../../../constants/Colors";
+import { UserList } from "../../../interfaces";
 
 const messages = () => {
-  return (
-    <View>
-      <Text>Chats</Text>
-    </View>
-  )
-}
+  const [users, setUsers] = useState<UserList[]>([]);
 
-export default messages
+  useEffect(() => {
+    // setUsers()
+  }, []);
 
-const styles = StyleSheet.create({})
+  return <View style={styles.container}></View>;
+};
+
+export default messages;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: Colors.light.background,
+  },
+});

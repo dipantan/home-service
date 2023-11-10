@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1082243327361",
+    "project_id": "omuday-8d547",
+    "storage_bucket": "omuday-8d547.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1082243327361:android:cdbb40d11eee6a7425f480",
+        "android_client_info": {
+          "package_name": "com.omuday.service"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDryD8OD55Zj0jFtXIN0ZYB1x8iMThnvTU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

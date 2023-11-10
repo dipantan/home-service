@@ -9,6 +9,7 @@ export interface Auth {
 }
 
 export interface User {
+  type: boolean;
   name: string;
   email: string;
   phone: string;
@@ -29,8 +30,35 @@ export interface RegisterTechnician {
   password: string;
   category: string;
   experience: string;
-  speciality: string;
   lat: string;
   long: string;
   type: string;
+}
+
+export interface Category {
+  id: string;
+  code: string;
+  image: string;
+  name: string;
+  description: string;
+}
+
+export interface Chat {
+  _id: string;
+  text: string;
+  createdAt: Date;
+  unread: boolean;
+  user: {
+    _id: string;
+    name: string;
+    avatar: string;
+  };
+}
+
+export interface UserList {
+  id: string;
+  name: string;
+  image: string;
+  placeholder: string;
+  unreadCount: string;
 }

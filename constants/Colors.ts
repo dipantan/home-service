@@ -19,5 +19,8 @@ export default {
   },
   common: {
     headerColor: "#294d9c",
+    green: "#05f76e",
+    gray: "#eee",
+    red: "#f7050d",
   },
 };

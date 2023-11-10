@@ -25,7 +25,7 @@ const loginLogic = createLogic({
           dispatch(loginFailed(req.data));
         } else {
           const data_ = req.data?.data;
-          dispatch(loginSuccess(data_));
+          dispatch(loginSuccess(data_)); //data dispatch
         }
       } else if (action.payload.type == "tech-register") {
         const data = {
@@ -35,7 +35,6 @@ const loginLogic = createLogic({
           password: action.payload.password,
           category: action.payload.category,
           experience: action.payload.experience,
-          speciality: action.payload.speciality,
           location: {
             lat: action.payload.lat,
             long: action.payload.long,
@@ -46,7 +45,7 @@ const loginLogic = createLogic({
           dispatch(loginFailed(req.data));
         } else {
           const data_ = req.data?.data;
-          dispatch(loginSuccess(data_));
+          dispatch(loginSuccess(data_)); //data dispatch
         }
       } else {
         const data = {
@@ -54,8 +53,12 @@ const loginLogic = createLogic({
           password: action.payload.password,
         };
         const req = await instance.post("/auth/login", data);
-        const data_ = req.data?.data;
-        dispatch(loginSuccess(data_));
+        if (req.data?.error) {
+          dispatch(loginFailed(req.data));
+        } else {
+          const data_ = req.data?.data;
+          dispatch(loginSuccess(data_));
+        }
       }
     } catch (error) {
       dispatch(loginFailed(error?.response?.data));

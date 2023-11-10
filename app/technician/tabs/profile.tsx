@@ -1,107 +1,127 @@
-import { Button, StyleSheet, Text, View, ScrollView, Pressable, Dimensions, StatusBar, Image,TextInput } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  Pressable,
+  Dimensions,
+  StatusBar,
+  Image,
+  TextInput,
+} from "react-native";
 import React, { useState } from "react";
-import { logout } from "../../../store/slices/auth";
-import { useDispatch } from "react-redux";
-import { Ionicons, Fontisto, Entypo, Feather, FontAwesome5, FontAwesome } from "@expo/vector-icons";
+import { Entypo, Feather, FontAwesome5, FontAwesome } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 
 import Colors from "../../../constants/Colors";
 
-const ts = Dimensions.get('window').width / 100;
+const ts = Dimensions.get("window").width / 100;
 const profile = () => {
-  const dispatch = useDispatch();
   const [image, setImage] = useState(null);
-  const [isEnabled, setisenabled] = React.useState(false);
-  const [liveText, setTextLive] = React.useState('Offline');
   const [name, setName] = React.useState("");
   const [pass, setPass] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [mobile, setMobile] = React.useState(""); //number
-  const [about, setAbout] = React.useState("");    //description
-  const [qualification, setQualification] = React.useState("");  //degree
 
-  const [address, setAddress] = React.useState("");  //address
-  const [consult, setConsult] = React.useState("");  //fees
-  const [desc, setDesc] = React.useState('');
-  const [isLoading, setIsLoading] = React.useState(false);
-
+  const [address, setAddress] = React.useState(""); //address
 
   return (
-
-    <ScrollView
-      showsVerticalScrollIndicator={false}
-    >
-      <View style={{ flex: 1, backgroundColor: '#f2f2f2' }}>
+    <ScrollView showsVerticalScrollIndicator={false}>
+      <View style={{ flex: 1, backgroundColor: "#f2f2f2" }}>
         <StatusBar
           backgroundColor={Colors.light.tint}
           barStyle="light-content"
         />
 
-        <View
-        >
+        <View>
           {/* <Loader visibl={isLoading} /> */}
 
           <LinearGradient
             // Background Linear Gradient
-            colors={[Colors.light.tint, 'tomato']}
+            colors={[Colors.light.tint, "tomato"]}
             style={styles.background}
           >
-            <Text style={{
-              fontFamily: 'novaBold',
-              fontSize: ts * 5,
-              color: '#fff',
-              alignSelf: 'center',
-              marginTop: ts * 4
+            <Text
+              style={{
+                fontFamily: "novaBold",
+                fontSize: ts * 5,
+                color: "#fff",
+                alignSelf: "center",
+                marginTop: ts * 4,
+              }}
+            >
+              Personal Details
+            </Text>
+          </LinearGradient>
 
-
-            }}>Personal Details</Text>
-
-          </LinearGradient >
-
-          <View style={{ height: ts * 27, backgroundColor: 'tomato', marginTop: -ts, width: '50%' }} />
-          <View style={{ height: ts * 27, backgroundColor: '#f2f2f2', marginTop: -ts * 26, width: '80%', borderTopLeftRadius: ts * 50 }} />
           <View
             style={{
-              marginTop: - ts * 20,
+              height: ts * 27,
+              backgroundColor: "tomato",
+              marginTop: -ts,
+              width: "50%",
+            }}
+          />
+          <View
+            style={{
+              height: ts * 27,
+              backgroundColor: "#f2f2f2",
+              marginTop: -ts * 26,
+              width: "80%",
+              borderTopLeftRadius: ts * 50,
+            }}
+          />
+          <View
+            style={{
+              marginTop: -ts * 20,
               // flexDirection: 'row',
-              backgroundColor: 'transparent',
-              alignItems: 'center',
-              alignSelf: 'center',
-
+              backgroundColor: "transparent",
+              alignItems: "center",
+              alignSelf: "center",
             }}
           >
             <Pressable
-              onPress={() => { }}
-
-              style={{ backgroundColor: '#eee', elevation: 10, width: ts * 30, height: ts * 30, alignSelf: 'center', borderRadius: ts * 30, borderWidth: 3, borderColor: '#fff', justifyContent: 'center', alignItems: 'center', marginTop: -ts * 22 }}
+              onPress={() => {}}
+              style={{
+                backgroundColor: "#eee",
+                elevation: 10,
+                width: ts * 30,
+                height: ts * 30,
+                alignSelf: "center",
+                borderRadius: ts * 30,
+                borderWidth: 3,
+                borderColor: "#fff",
+                justifyContent: "center",
+                alignItems: "center",
+                marginTop: -ts * 22,
+              }}
             >
-              {image &&
+              {image && (
                 <Image
-
                   source={{ uri: image }}
-                  style={{ width: ts * 28, height: ts * 28, borderRadius: ts * 28, }} />}
+                  style={{
+                    width: ts * 28,
+                    height: ts * 28,
+                    borderRadius: ts * 28,
+                  }}
+                />
+              )}
 
-              <Feather name="camera"
-
+              <Feather
+                name="camera"
                 size={ts * 6}
-                color="#63368a" style={{
-                  alignSelf: 'center',
-                  position: 'absolute',
+                color="#63368a"
+                style={{
+                  alignSelf: "center",
+                  position: "absolute",
                   bottom: -ts * 4.5,
-                  backgroundColor: '#fff',
+                  backgroundColor: "#fff",
                   borderRadius: 20,
                   padding: ts * 2,
-                  opacity: .8,
+                  opacity: 0.8,
                 }}
               />
             </Pressable>
-            <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: -ts * 7 }}>
-
-              <Feather name="home" size={ts * 5} color="#63368a" style={{ padding: ts * 2.5, backgroundColor: '#fff', borderRadius: ts * 5, marginRight: ts * 20, elevation: ts * 4 }} />
-              <FontAwesome5 onPress={() => { }} name="share" size={ts * 5} color="#63368a" style={{ padding: ts * 2.5, backgroundColor: '#fff', borderRadius: ts * 5, marginLeft: ts * 20, elevation: ts * 4 }} />
-
-
-            </View>
 
             <View style={{ marginTop: 15 }}>
               <Text style={styles.inputfildLabel}>Name</Text>
@@ -110,7 +130,6 @@ const profile = () => {
                   value={name}
                   onChangeText={(tex) => setName(tex)}
                   placeholder="Your Name"
-                  
                   style={styles.inputfild}
                 />
                 {/* eye / eye-off */}
@@ -129,7 +148,6 @@ const profile = () => {
                   value={email}
                   onChangeText={(tex) => setEmail(tex)}
                   placeholder="Email"
-                  
                   style={styles.inputfild}
                 />
                 {/* eye / eye-off */}
@@ -169,7 +187,6 @@ const profile = () => {
                   placeholder="Full Address"
                   multiline={true}
                   numberOfLines={2}
-                 
                   style={styles.inputfild}
                 />
                 {/* eye / eye-off */}
@@ -188,7 +205,6 @@ const profile = () => {
                   value={mobile}
                   onChangeText={(tex) => setMobile(tex)}
                   placeholder="Mobile Number"
-                  
                   style={styles.inputfild}
                 />
                 {/* eye / eye-off */}
@@ -200,54 +216,40 @@ const profile = () => {
                 />
               </View>
             </View>
-            
-         
-
           </View>
 
-
-
-          <Pressable onPress={() => { }}>
+          <Pressable onPress={() => {}}>
             <LinearGradient
               // Background Linear Gradient
-              colors={[Colors.light.tint, 'tomato']}
+              colors={[Colors.light.tint, "tomato"]}
               style={{
                 height: ts * 13,
-                flexDirection: 'row',
-                backgroundColor: '#63368a',
-                alignItems: 'center',
-                justifyContent: 'center',
+                flexDirection: "row",
+                backgroundColor: "#63368a",
+                alignItems: "center",
+                justifyContent: "center",
+                marginTop: ts * 2,
                 marginHorizontal: ts * 4,
                 marginBottom: ts * 4,
                 borderRadius: ts * 34,
               }}
             >
-              <Text style={{
-                fontFamily: 'novaBold',
-                fontSize: ts * 4,
-                color: '#fff',
-                alignSelf: 'center',
-
-
-              }}>LOG OUT </Text>
+              <Text
+                style={{
+                  fontFamily: "novaBold",
+                  fontSize: ts * 4,
+                  color: "#fff",
+                  alignSelf: "center",
+                }}
+              >
+                LOG OUT{" "}
+              </Text>
               <Entypo name="log-out" size={ts * 5} style={{}} color="#fff" />
-
-
             </LinearGradient>
           </Pressable>
-
-
-
-
         </View>
-
-
-
       </View>
     </ScrollView>
-
-
-
   );
 };
 
@@ -256,16 +258,17 @@ export default profile;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
   },
 
   background: {
     height: ts * 30,
-    backgroundColor: '#63368a',
+    backgroundColor: "#63368a",
     // borderBottomLeftRadius: ts * 34,
     borderBottomRightRadius: ts * 18,
     // paddingBottom: ts * ,
-  }, inputContainer: {
+  },
+  inputContainer: {
     backgroundColor: "white",
     borderRadius: 18,
     borderWidth: 1.5,
@@ -277,15 +280,16 @@ const styles = StyleSheet.create({
   },
   inputIcon: {
     marginRight: 20,
-  }, inputfildLabel: {
+  },
+  inputfildLabel: {
     fontSize: 16,
     marginBottom: 10,
     fontWeight: "bold",
-  }, inputfild: {
+  },
+  inputfild: {
     paddingLeft: 16,
     height: 50,
     borderColor: "#ccc",
     width: "80%",
   },
-
 });

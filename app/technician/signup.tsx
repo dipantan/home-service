@@ -24,7 +24,7 @@ import { Picker } from "@react-native-picker/picker";
 import Colors from "../../constants/Colors";
 import { useNavigation } from "expo-router";
 import { ScrollView } from "react-native-gesture-handler";
-import { RegisterTechnician } from "../../interfaces";
+import { Category, RegisterTechnician } from "../../interfaces";
 import { getError, getIsLoading } from "../../store/selectors";
 import { instance } from "../../helper";
 import {
@@ -46,13 +46,11 @@ const Signup = () => {
     password: "",
     category: "",
     experience: "",
-    speciality: "",
     lat: "",
     long: "",
     type: "tech-register",
   });
-  const [categories, setCategories] = useState<string[]>([]);
-  const [subCategories, setSubCategories] = useState<string[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
   const error = useSelector(getError);
   const loading = useSelector(getIsLoading);
 
@@ -97,23 +95,6 @@ const Signup = () => {
     }
   };
 
-  const getSubCategories = async () => {
-    try {
-      setIsLoading(true);
-      const req = await instance.get(`/services?category=${data.category}`);
-      setSubCategories(req.data?.data);
-      setData((prev) => {
-        return {
-          ...prev,
-          speciality: req.data?.data[0],
-        };
-      });
-      setIsLoading(false);
-    } catch (err) {
-      setIsLoading(false);
-    }
-  };
-
   useEffect(() => {
     getUserLocation();
     getAllCategory();
@@ -125,12 +106,6 @@ const Signup = () => {
       dispatch(clearError(""));
     }
   }, [error]);
-
-  useEffect(() => {
-    if (data.category) {
-      getSubCategories();
-    }
-  }, [data.category]);
 
   return (
     <View style={{ flex: 1, backgroundColor: "#fff" }}>
@@ -162,6 +137,7 @@ const Signup = () => {
         <Text style={{ alignSelf: "center", fontWeight: "bold", fontSize: 24 }}>
           Welcome Back!
         </Text>
+
         <Text
           style={{ alignSelf: "center", fontWeight: "normal", fontSize: 15 }}
         >
@@ -297,53 +273,12 @@ const Signup = () => {
                     style={{
                       textTransform: "capitalize",
                     }}
-                    key={item}
-                    label={item}
-                    value={item}
+                    key={item?.id}
+                    label={item?.name}
+                    value={item?.code}
                   />
                 );
               })}
-            </Picker>
-          </View>
-
-          {/* sub-category picker*/}
-          <View style={{ marginTop: 15 }}>
-            <Text style={styles.inputfildLabel}>Speciality</Text>
-            <Picker
-              selectedValue={data.speciality}
-              onValueChange={(itemValue, itemIndex) => {
-                setData((prev) => {
-                  return {
-                    ...prev,
-                    speciality: itemValue,
-                  };
-                });
-              }}
-              style={styles.inputContainer}
-              mode="dropdown"
-            >
-              {subCategories.length > 0 ? (
-                subCategories.map((item) => {
-                  return (
-                    <Picker.Item
-                      style={{
-                        textTransform: "capitalize",
-                      }}
-                      key={item}
-                      label={item}
-                      value={item}
-                    />
-                  );
-                })
-              ) : (
-                <Picker.Item
-                  style={{
-                    textTransform: "capitalize",
-                  }}
-                  label={"Select a category"}
-                  value={"Select a category"}
-                />
-              )}
             </Picker>
           </View>
 
@@ -359,15 +294,14 @@ const Signup = () => {
             <View style={styles.inputContainer}>
               <TextInput
                 placeholder="5"
-                secureTextEntry={eye}
                 style={styles.inputfild}
-                value={data.password}
+                value={data.experience}
                 keyboardType="number-pad"
                 onChangeText={(text) =>
                   setData((prev) => {
                     return {
                       ...prev,
-                      password: text,
+                      experience: text,
                     };
                   })
                 }
@@ -390,6 +324,16 @@ const Signup = () => {
               marginTop: 30,
               borderRadius: 8,
             }}
+            disabled={
+              data.category === "" ||
+              data.email === "" ||
+              data.experience === "" ||
+              data.name === "" ||
+              data.password === "" ||
+              data.phone === "" ||
+              data.lat === "" ||
+              data.long === ""
+            }
             onPress={register}
           >
             {loading ? (
