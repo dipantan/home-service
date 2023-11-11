@@ -61,4 +61,5 @@ export interface UserList {
   image: string;
   placeholder: string;
   unreadCount: string;
+  onPress: () => void;
 }

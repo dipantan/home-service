@@ -3,6 +3,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { IMessage, GiftedChat } from "react-native-gifted-chat";
 
 import { Chat } from "../../interfaces";
+import Colors from "../../constants/Colors";
 
 const ChatDetails = ({ name, id }) => {
   const [messages, setMessages] = useState<Chat[]>([]);
@@ -28,16 +29,23 @@ const ChatDetails = ({ name, id }) => {
     );
   }, []);
   return (
-    <GiftedChat
-      messages={messages}
-      onSend={(messages) => onSend(messages)}
-      user={{
-        _id: 1,
-      }}
-    />
+    <View style={styles.container}>
+      <GiftedChat
+        messages={messages}
+        onSend={(messages) => onSend(messages)}
+        user={{
+          _id: 1,
+        }}
+      />
+    </View>
   );
 };
 
 export default ChatDetails;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: Colors.light.background,
+  },
+});
