@@ -1,10 +1,14 @@
-import { FlatList, StyleSheet, View } from "react-native";
+import { FlatList, StyleSheet, View, Text } from "react-native";
 import React, { useEffect, useState } from "react";
 
 import Colors from "../../../constants/Colors";
 import { UserList } from "../../../interfaces";
 import ChatList from "../../../components/ChatList";
 import { useNavigation } from "expo-router";
+import {
+  responsiveScreenWidth,
+  responsiveWidth,
+} from "react-native-responsive-dimensions";
 
 const messages = () => {
   const [users, setUsers] = useState<UserList[]>([]);
@@ -46,6 +50,15 @@ const messages = () => {
 
   return (
     <View style={styles.container}>
+      <Text
+        style={{
+          fontWeight: "700",
+          fontSize: responsiveWidth(6),
+          marginStart: responsiveScreenWidth(2),
+        }}
+      >
+        Chat List
+      </Text>
       <FlatList
         data={users}
         renderItem={({ item }) => {
@@ -57,7 +70,9 @@ const messages = () => {
               placeholder={item.placeholder}
               unreadCount={item.unreadCount}
               onPress={() => {
-                navigation.navigate("technician/Chat");
+                navigation.navigate("technician/Chat", {
+                  data: item,
+                });
               }}
             />
           );
@@ -73,5 +88,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.light.background,
+    padding: responsiveScreenWidth(4),
+    rowGap: responsiveScreenWidth(2),
   },
 });

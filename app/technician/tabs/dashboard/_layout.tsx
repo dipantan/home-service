@@ -15,6 +15,7 @@ import { useSelector } from "react-redux";
 import { getUser } from "../../../../store/selectors";
 import {
   responsiveHeight,
+  responsiveScreenWidth,
   responsiveWidth,
 } from "react-native-responsive-dimensions";
 import Pending from "./pending";
@@ -31,7 +32,17 @@ export default function TabViewExample() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.textBold}>Hi {user.name}</Text>
+      <Text
+        style={[
+          styles.textBold,
+          {
+            marginStart: responsiveScreenWidth(4),
+            fontSize: responsiveScreenWidth(5),
+          },
+        ]}
+      >
+        Hi, {user.name}
+      </Text>
 
       {/* status switch */}
       <View style={styles.switchContainer}>
@@ -127,6 +138,7 @@ const styles = StyleSheet.create({
   },
   textBold: {
     fontWeight: "bold",
+    // marginStart: responsiveScreenWidth(4),
   },
   tabBar: {
     height: responsiveHeight(6),

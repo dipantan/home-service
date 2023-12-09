@@ -9,7 +9,7 @@ export interface Auth {
 }
 
 export interface User {
-  type: boolean;
+  type: string;
   name: string;
   email: string;
   phone: string;

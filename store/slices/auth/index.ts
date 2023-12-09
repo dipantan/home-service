@@ -6,6 +6,7 @@ const initialState: Auth = {
     name: "",
     email: "",
     phone: "",
+    type: "",
   },
   type: "",
   token: "",
@@ -39,9 +40,14 @@ const authSlice = createSlice({
     logoutSuccess: (state, action) => {
       state.isLoading = false;
       state.isAuthenticated = false;
-      state.user = null;
-      state.type = null;
-      state.token = null;
+      state.user = {
+        email: "",
+        name: "",
+        phone: "",
+        type: "",
+      };
+      state.type = "";
+      state.token = "";
     },
     logoutFailed: (state, action) => {
       state.isLoading = false;
