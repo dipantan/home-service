@@ -23,4 +23,5 @@ export default {
     gray: "#eee",
     red: "#f7050d",
   },
+  primary:'#56778'
 };
