@@ -1,36 +1,57 @@
-import { Button, StyleSheet, Text, View,TouchableOpacity,Image,ScrollView } from "react-native";
+import { Button, StyleSheet, Text, View, TouchableOpacity, Image, ScrollView, Alert } from "react-native";
 import React from "react";
 import { logout } from "../../../store/slices/auth";
 import { useDispatch } from "react-redux";
-import { Ionicons,MaterialCommunityIcons } from '@expo/vector-icons';
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useRouter } from "expo-router";
 import Colors from "../../../constants/Colors";
 
 const profile = () => {
-  const router= useRouter();
+  const router = useRouter();
   const dispatch = useDispatch();
   const settings = [
-    { id: 1, title: 'Account', icon: 'person-outline',click:"user/accountsettings" },
-    { id: 2, title: 'Notifications', icon: 'notifications-outline',click:"user/bookmark"},
-    { id: 3, title: 'Privacy', icon: 'lock-closed-outline',click:"user/privacypolicy" },
-    { id: 4, title: 'Security', icon: 'shield-checkmark-outline',click:"user/securitysettings" },
-    { id: 5, title: 'Preferences', icon: 'settings-outline',click:"user/bookmark" },
-    { id: 6, title: 'Help & Support', icon: 'help-circle-outline',click:"user/bookmark" },
-    { id: 7, title: 'About', icon: 'information-circle-outline',click:"user/bookmark" },
-    { id: 8, title: 'Terms & Conditions', icon: 'document-text-outline',click:"user/termsandcondition" },
+    { id: 1, title: 'Account', icon: 'person-outline', click: "user/accountsettings" },
+    { id: 2, title: 'Notifications', icon: 'notifications-outline', click: "user/notificationsettings" },
+    { id: 3, title: 'Privacy', icon: 'lock-closed-outline', click: "user/privacypolicy" },
+    { id: 4, title: 'Security', icon: 'shield-checkmark-outline', click: "user/securitysettings" },
+    { id: 6, title: 'Help & Support', icon: 'help-circle-outline', click: "user/helpsupport" },
+    { id: 7, title: 'About', icon: 'information-circle-outline', click: "user/aboutus" },
+    { id: 8, title: 'Terms & Conditions', icon: 'document-text-outline', click: "user/termsandcondition" },
     { id: 9, title: 'Sign Out', icon: 'log-out-outline' },
     // Add more settings as needed
   ];
 
   const renderSettings = () => {
     return settings.map((setting) => (
-      <TouchableOpacity onPress={()=>{
-        router.push(setting.click)
+      <TouchableOpacity onPress={() => {
+        if (setting.title === 'Sign Out') {
+
+          Alert.alert(
+            'Log out',
+            'Are you sure you want to logout!',
+            [
+              {
+              text: 'Cancel',
+              onPress: () => console.log('cancel'),
+             },
+             {
+              text: 'OK',
+              onPress: () => dispatch(logout("")),
+            },
+            ],
+            { cancelable: true }
+          );
+
+
+        } else {
+          router.push(setting.click)
+        }
+
       }
-    }
-    
-     
-       key={setting.id} style={styles.settingItem}>
+      }
+
+
+        key={setting.id} style={styles.settingItem}>
         <Ionicons name={setting.icon} size={25} color="#333" style={styles.settingIcon} />
         <Text style={styles.settingTitle}>{setting.title}</Text>
         <Ionicons name="chevron-forward-outline" size={20} color="#aaa" />
@@ -38,8 +59,8 @@ const profile = () => {
     ));
   };
   return (
-    <ScrollView style={{flex:1,backgroundColor:'#fff'}}>
-        <View style={styles.header}>
+    <ScrollView style={{ flex: 1, backgroundColor: '#fff' }}>
+      <View style={styles.header}>
         <TouchableOpacity>
 
           <Ionicons name="logo-electron" size={30} color={Colors.primary} />
@@ -50,8 +71,8 @@ const profile = () => {
         </View>
 
 
-        
-        <TouchableOpacity  style={styles.favicon}>
+
+        <TouchableOpacity style={styles.favicon}>
 
           <MaterialCommunityIcons name="dots-horizontal-circle-outline" size={30} color="#333" />
         </TouchableOpacity>
@@ -59,7 +80,7 @@ const profile = () => {
 
       </View>
       <View style={styles.profileContainer}>
-       
+
         <Image
           source={{ uri: 'https://picsum.photos/300/200/?random' }}
           style={styles.profileImage}
@@ -69,7 +90,7 @@ const profile = () => {
       </View>
       <View style={styles.container}>{renderSettings()}</View>
     </ScrollView>
-    
+
   );
 };
 

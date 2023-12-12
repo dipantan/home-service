@@ -28,7 +28,9 @@ const styles = StyleSheet.create({
     shadowColor: '#000000',
     shadowOpacity: 0.2,
     height:59,
-    paddingHorizontal:20
+    paddingHorizontal:20,
+    borderBottomWidth:1,
+    borderColor:'#ccc'
     
    
 

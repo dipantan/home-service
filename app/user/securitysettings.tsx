@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, Switch, StyleSheet } from 'react-native';
 import Header from '../../components/Header';
+import Colors from '../../constants/Colors';
 
 const SecuritySettingsPage = () => {
   const [biometricAuthEnabled, setBiometricAuthEnabled] = useState(false);
@@ -25,6 +26,8 @@ const SecuritySettingsPage = () => {
       <View style={styles.setting}>
         <Text style={{fontSize:16,fontWeight:'bold'}}>Biometric Authentication</Text>
         <Switch
+        trackColor={{ false: '#767577', true: Colors.primary }}
+        thumbColor={biometricAuthEnabled ? Colors.primary : '#f4f3f4'}
           value={biometricAuthEnabled}
           onValueChange={toggleBiometricAuth}
         />
@@ -33,6 +36,8 @@ const SecuritySettingsPage = () => {
       <View style={styles.setting}>
         <Text style={{fontSize:16,fontWeight:'bold'}}>Two-Factor Authentication</Text>
         <Switch
+        trackColor={{ false: '#767577', true: Colors.primary }}
+        thumbColor={twoFactorAuthEnabled ? Colors.primary : '#f4f3f4'}
           value={twoFactorAuthEnabled}
           onValueChange={toggleTwoFactorAuth}
         />
@@ -44,6 +49,7 @@ const SecuritySettingsPage = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor:'#fdfdfd'
   },
   title: {
     fontSize: 24,

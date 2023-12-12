@@ -28,7 +28,7 @@ const AccoutSettings = () => {
       };
 
     return (
-        <View style={{ flex: 1 }}>
+        <View style={{ flex: 1,backgroundColor:'#fdfdfd' }}>
             <Header
                 title={'Account Settings'} />
             <View style={styles.container}>
@@ -48,6 +48,7 @@ const AccoutSettings = () => {
                         value={dob}
                         mode="date"
                         display="default"
+                        
                         onChange={onChangeDate}
                     />
                 )}
@@ -75,8 +76,9 @@ const AccoutSettings = () => {
                     onChangeText={(text) => setAddress(text)}
                 />
                 <View style={styles.pickerContainer}>
-                    <Text style={styles.pickerLabel}>Gender</Text>
+                   
                     <RNPickerSelect
+                        
                         placeholder={{ label: 'Select Gender', value: null }}
                         onValueChange={(value) => setGender(value)}
                         items={[
@@ -113,9 +115,11 @@ const pickerSelectStyles = StyleSheet.create({
         paddingVertical: 8,
         borderWidth: 1,
         borderColor: '#000',
-        borderRadius: 8,
+        borderRadius: 12,
         color: 'black',
         paddingRight: 30,
+        backgroundColor:'#fdfdfd',
+        
     },
 });
 
@@ -131,10 +135,11 @@ const styles = StyleSheet.create({
         height: 50,
         borderWidth: 1,
         borderColor: '#ccc',
-        borderRadius: 5,
+        borderRadius: 10,
         paddingHorizontal: 10,
         marginBottom: 20,
-        justifyContent:'center'
+        justifyContent:'center',
+        backgroundColor:'#fdfdfd'
     },
     pickerContainer: {
         width: '100%',

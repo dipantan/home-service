@@ -5,7 +5,7 @@ import {
   TextInput,
   TouchableOpacity,
   ToastAndroid,
-  ActivityIndicator,
+  ActivityIndicator,Image
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,6 +14,7 @@ import { Entypo, FontAwesome, Ionicons } from "@expo/vector-icons";
 import Colors from "../constants/Colors";
 import { Link, useNavigation } from "expo-router";
 import { getError, getIsLoading } from "../store/selectors";
+import { ScrollView } from "react-native-gesture-handler";
 
 const Login = () => {
   const [email, setEmail] = useState(null);
@@ -52,7 +53,8 @@ const Login = () => {
         paddingTop: "4%",
       }}
     >
-      <Link asChild href={"/technician/signup"}>
+      <ScrollView showsVerticalScrollIndicator={false}>
+       <Link asChild href={"/technician/signup"}>
       <TouchableOpacity
         style={{
           alignSelf: "flex-end",
@@ -63,9 +65,15 @@ const Login = () => {
       </TouchableOpacity>
       </Link>
 
+      <Image
+      source={require('../assets/images/login.png')}
+      resizeMode="cover"
+      style={{height:180,width:170,alignSelf:'center',marginTop:10}}
+      />
+
       <View
         style={{
-          marginTop: "8%",
+          marginTop: "3%",
         }}
       >
         <Text style={{ alignSelf: "center", fontWeight: "bold", fontSize: 24 }}>
@@ -77,9 +85,8 @@ const Login = () => {
           Please enter your log in details below
         </Text>
 
-        <View style={{ marginTop: 40 }}>
-          <View style={{ marginTop: 15 }}>
-            <Text style={styles.inputfildLabel}>Email</Text>
+        <View style={{ marginTop: 20 }}>
+          <View style={{ marginTop: 10 }}>
             <View style={styles.inputContainer}>
               <TextInput
                 value={email}
@@ -97,8 +104,7 @@ const Login = () => {
             <Text style={styles.errTextStyle}>{}</Text>
           </View>
 
-          <View style={{ marginTop: 15 }}>
-            <Text style={styles.inputfildLabel}>Password</Text>
+          <View style={{ marginTop: 10 }}>
             <View style={styles.inputContainer}>
               <TextInput
                 value={pass}
@@ -162,37 +168,13 @@ const Login = () => {
             </Text>
           </Text>
 
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              marginTop: 20,
-            }}
-          >
-            <View style={{ flex: 1, height: 1, backgroundColor: "#ccc" }} />
-            <Text style={{ color: "#CCC", marginHorizontal: 10 }}>Or</Text>
-            <View style={{ flex: 1, height: 1, backgroundColor: "#ccc" }} />
-          </View>
+        
 
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-around",
-              marginTop: 20,
-            }}
-          >
-            <TouchableOpacity>
-              <FontAwesome name="facebook" size={30} color="blue" />
-            </TouchableOpacity>
-            <TouchableOpacity>
-              <FontAwesome name="google" size={30} color="red" />
-            </TouchableOpacity>
-            <TouchableOpacity>
-              <FontAwesome name="apple" size={30} color="black" />
-            </TouchableOpacity>
-          </View>
         </View>
       </View>
+
+    </ScrollView>
+     
     </View>
   );
 };
